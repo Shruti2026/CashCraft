@@ -92,7 +92,7 @@ export const AuthProvider = ({ children }) => {
     if (token) {
       fetchUserProfile(token);
     }
-  }, []);
+  },);
   const fetchUserProfile = async (token) => {
     try {
       const response = await axios.get(AUTH_API.PROFILE, {

@@ -1,40 +1,20 @@
-const express = require('express');
-const cors = require('cors');
-const mongoose = require('mongoose');
-require('dotenv').config();
-const authRoutes = require('./routes/auth');
-const authRoutes2 = require('./routes/transactions');
+const router = require('express').Router();
+const { addExpense, getExpenses, deleteExpense } = require('../controllers/expense');
+const { addIncome, getIncomes, deleteIncome } = require('../controllers/income');
+const { addOrUpdateSaving, getSavings } = require('../controllers/saving');
 
+// Income routes
+router.post('/add-income', addIncome);
+router.get('/get-incomes', getIncomes);
+router.delete('/delete-income/:id', deleteIncome);
 
-// fs is file system ad readdirSync means read the sync directory synchronously so it is going to do line by line
-// so readdirSync reads the information line by line in a specified directory
-const {readdirSync} = require('fs')
+// Expense routes
+router.post('/add-expense', addExpense);
+router.get('/get-expenses', getExpenses);
+router.delete('/delete-expense/:id', deleteExpense);
 
-const app = express();
+// Savings routes
+router.post('/add-saving', addOrUpdateSaving);
+router.get('/get-savings', getSavings);
 
-// Middleware
-app.use(express.json());
-app.use(cors());
-
-app.use('/api/v1/auth', authRoutes);
-app.use('/api/v1/', authRoutes2);
-
-// readdirSync('./routes').map((route) => app.use('/api/v1', require('./routes/' + route)))
-
-// Connect to MongoDB
-mongoose.connect(process.env.MONGO_URL, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
-.then(() => {
-  console.log('MongoDB connected successfully');
-})
-.catch((error) => {
-  console.error('MongoDB connection error:', error);
-});
-
-// Start server
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+module.exports = router;

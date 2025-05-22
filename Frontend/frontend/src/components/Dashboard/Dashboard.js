@@ -8,7 +8,7 @@ import Chart from '../Chart/Chart';
 
 function Dashboard() {
     const {
-        totalExpenses, incomes, expenses, savings,
+        totalExpenses, incomes, expenses,
         totalIncome, totalBalance, totalSavings,
         getIncomes, getExpenses, getSavings
     } = useGlobalContext();
@@ -17,7 +17,7 @@ function Dashboard() {
         getIncomes();
         getExpenses();
         getSavings(); // fetch savings too
-    }, []);
+    },);
 
     return (
         <DashboardStyled>
