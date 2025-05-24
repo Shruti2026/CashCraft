@@ -1,113 +1,99 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import { useGlobalContext } from '../../context/globalContext';
-import Button from '../button/button';
-import { plus } from '../../utils/icons';
+import React, { useState } from "react";
+import styled from "styled-components";
+import { useGlobalContext } from "../../context/globalContext";
+import Button from "../button/button";
+import { plus } from "../../utils/icons";
 
-function SavingForm() {
-  const { savings, addSaving, error, setError } = useGlobalContext();
+const SavingForm = () => {
+  const { addSaving, error, setError } = useGlobalContext();
 
   const [inputState, setInputState] = useState({
-    goal: '',
-    amount: '',
-    targetAmount: ''
+    goal: "",
+    amount: "",
+    targetAmount: "",
   });
 
   const { goal, amount, targetAmount } = inputState;
 
-  const handleInput = name => e => {
+  const handleInput = (name) => (e) => {
     setInputState({ ...inputState, [name]: e.target.value });
-    setError('');
+    setError("");
   };
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validate inputs
     if (!goal || !amount || !targetAmount) {
-      setError('Please fill all fields');
+      setError("Please fill all the fields");
       return;
     }
 
-    // Check if goal exists
-    const existingGoal = savings.find(s => s.goal.toLowerCase() === goal.toLowerCase());
+    // Call addSaving (backend adds or updates)
+    await addSaving({
+      goal,
+      amount: parseFloat(amount),
+      targetAmount: parseFloat(targetAmount),
+    });
 
-    if (existingGoal) {
-      // Update existing saving by adding amount and updating targetAmount
-      const updatedAmount = parseFloat(existingGoal.amount) + parseFloat(amount);
-      const updatedTarget = parseFloat(targetAmount || existingGoal.targetAmount);
-
-      await addSaving({
-        goal,
-        amount: updatedAmount,
-        targetAmount: updatedTarget
-      });
-    } else {
-      // Add new saving
-      await addSaving({
-        goal,
-        amount: parseFloat(amount),
-        targetAmount: parseFloat(targetAmount)
-      });
-    }
-
+    // Clear inputs after submit
     setInputState({
-      goal: '',
-      amount: '',
-      targetAmount: ''
+      goal: "",
+      amount: "",
+      targetAmount: "",
     });
   };
 
   return (
     <FormStyled onSubmit={handleSubmit}>
       {error && <p className="error">{error}</p>}
+
       <div className="input-control">
         <input
           type="text"
           value={goal}
-          name="goal"
           placeholder="Saving Goal"
-          onChange={handleInput('goal')}
+          onChange={handleInput("goal")}
           required
         />
       </div>
+
       <div className="input-control">
         <input
           type="number"
           value={amount}
-          name="amount"
           placeholder="Amount"
-          onChange={handleInput('amount')}
+          onChange={handleInput("amount")}
           required
           min="0"
           step="0.01"
         />
       </div>
+
       <div className="input-control">
         <input
           type="number"
           value={targetAmount}
-          name="targetAmount"
           placeholder="Target Amount"
-          onChange={handleInput('targetAmount')}
+          onChange={handleInput("targetAmount")}
           required
           min="0"
           step="0.01"
         />
       </div>
+
       <div className="submit-btn">
         <Button
-          name={'Add / Update'}
+          name={"Add / Update"}
           icon={plus}
-          bPad={'.8rem 1.6rem'}
-          bRad={'30px'}
-          bg={'var(--color-accent)'}
-          color={'#fff'}
+          bPad={".8rem 1.6rem"}
+          bRad={"30px"}
+          bg={"var(--color-accent)"}
+          color={"#fff"}
         />
       </div>
     </FormStyled>
   );
-}
+};
 
 const FormStyled = styled.form`
   display: flex;
@@ -119,7 +105,7 @@ const FormStyled = styled.form`
     font-size: inherit;
     outline: none;
     border: none;
-    padding: .5rem 1rem;
+    padding: 0.5rem 1rem;
     border-radius: 5px;
     border: 2px solid #fff;
     background: transparent;
@@ -147,7 +133,8 @@ const FormStyled = styled.form`
 
   .error {
     color: red;
-    font-weight: bold;
+    font-weight: 600;
+    font-size: 1rem;
   }
 `;
 

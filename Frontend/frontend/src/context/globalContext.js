@@ -70,41 +70,46 @@ export const GlobalProvider = ({ children }) => {
 
   const totalExpenses = () => expenses.reduce((total, expense) => total + expense.amount, 0);
 
-  // Savings
   const getSavings = async () => {
-    try {
-      const res = await axios.get(SAVING_API.GET);
-      setSavings(res.data);
-    } catch (error) {
-      setError(error.response?.data?.message || 'Error fetching savings');
-    }
-  };
+        try {
+            const res = await axios.get(SAVING_API.GET);
+            setSavings(res.data);
+        } catch (error) {
+            setError(error.response?.data?.message || '');
+        }
+    };
 
-  const addSaving = async (saving) => {
-    try {
-      // Backend returns message only, so after POST call getSavings to update local state
-      await axios.post(SAVING_API.ADD_OR_UPDATE, saving);
-      await getSavings(); // refresh the savings list
-    } catch (err) {
-      setError(err.response?.data?.message || 'Error adding saving');
-    }
-  };
+    const addSaving = async (saving) => {
+        try {
+            const res = await axios.post(SAVING_API.ADD_OR_UPDATE, saving);
+            const returnedSaving = res.data.saving;
 
-  const updateSaving = async (id, saving) => {
-    // Your backend doesn't have a separate update route, so this might be unused.
-    // We can skip or remove this if unused.
-  };
+            setSavings(prevSavings => {
+                const index = prevSavings.findIndex(s => s._id === returnedSaving._id);
+                if (index !== -1) {
+                    const updated = [...prevSavings];
+                    updated[index] = returnedSaving; // replace updated saving
+                    return updated;
+                } else {
+                    return [...prevSavings, returnedSaving]; // add new saving
+                }
+            });
 
-  const deleteSaving = async (id) => {
-    try {
-      await axios.delete(SAVING_API.DELETE(id));
-      getSavings();
-    } catch (err) {
-      setError(err.response?.data?.message || 'Error deleting saving');
-    }
-  };
+        } catch (err) {
+            setError(err.response?.data?.message || 'Error adding saving');
+        }
+    };
 
-  const totalSavings = () => savings.reduce((acc, curr) => acc + curr.amount, 0);
+    const deleteSaving = async (id) => {
+        try {
+            await axios.delete(SAVING_API.DELETE(id));
+            setSavings(prev => prev.filter(s => s._id !== id));
+        } catch (err) {
+            setError(err.response?.data?.message || 'Error deleting saving');
+        }
+    };
+
+    const totalSavings = () => savings.reduce((acc, curr) => acc + curr.amount, 0);
 
   // Balance & History
   const totalBalance = () => totalIncome() - totalExpenses() - totalSavings();
@@ -133,10 +138,12 @@ export const GlobalProvider = ({ children }) => {
 
       // Saving
       savings,
-      getSavings,
-      addSaving,
-      deleteSaving,
-      totalSavings,
+        getSavings,
+        addSaving,
+        deleteSaving,
+        totalSavings,
+        error,
+        setError,
 
       // Others
       totalBalance,

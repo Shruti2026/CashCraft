@@ -9,7 +9,7 @@ const getSavings = async (req, res) => {
   } 
   catch (error) 
   {
-    res.status(500).json({ message: 'Error fetching savings', error });
+    res.status(500).json({ message: '', error });
   }
 };
 
@@ -26,14 +26,14 @@ const addOrUpdateSaving = async (req, res) => {
 
     if (existing) {
       existing.amount += amount;
-      existing.targetAmount = targetAmount; // Optional: update target if needed
-      await existing.save();
-      return res.status(200).json({ message: 'Saving updated' });
+      existing.targetAmount = targetAmount; // optional update
+      const updatedSaving = await existing.save();
+      return res.status(200).json({ message: 'Saving updated', saving: updatedSaving });
     }
 
     const newSaving = new Saving({ goal, amount, targetAmount });
-    await newSaving.save();
-    res.status(201).json({ message: 'Saving added' });
+    const saved = await newSaving.save();
+    res.status(201).json({ message: 'Saving added', saving: saved });
 
   } catch (error) {
     res.status(500).json({ message: 'Error saving data', error });

@@ -76,7 +76,7 @@ const DashboardStyled = styled.div`
             .amount-con{
                 display: grid;
                 grid-template-columns: repeat(4, 1fr);
-                gap: 2rem;
+                gap: 1rem;
                 margin-top: 2rem;
 
                 .income, .expense, .saving, .balance {
@@ -86,6 +86,8 @@ const DashboardStyled = styled.div`
                     border-radius: 20px;
                     text-align: center;
                     padding: 1rem;
+                    width: 190px;
+                    height: 100px;
                     p {
                         font-weight: 650;
                         font-size: 25px;
