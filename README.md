@@ -1,56 +1,48 @@
 # CashCraft
 
-KharchaGuru is a cutting-edge MERN stack-powered expense tracker crafted to elevate personal finance management to a new level of efficiency. This elegant platform seamlessly integrates secure user authentication, real-time expense monitoring, and a sleek, intuitive interface designed for effortless categorization and insightful financial analysis. KharchaGuru simplifies financial data, providing clear insights that help users make informed decisions and take control of their financial future.
+CashCraft is a cutting-edge MERN stack-powered expense tracker crafted to elevate personal finance management to a new level of efficiency. This elegant platform seamlessly integrates secure user authentication, real-time expense monitoring, and a sleek, intuitive interface designed for effortless categorization and insightful financial analysis. CashCraft simplifies financial data, providing clear insights that help users make informed decisions and take control of their financial future.
+
+# 🎥 Demo
+
+[Watch the video](https://www.linkedin.com/feed/update/urn:li:activity:7332138776703488000/)
 
 # Screenshots
 
-*Login page of KharchaGuru*
-![Login Page Of KharchaGuru](https://github.com/Soumya6Tiwari/KharchaGuru/blob/master/Screenshots/Screenshot%20(1487).png)<br><br><br>
+*Login page of CashCraft*
+![Login Page Of CashCraft](./Frontend/frontend/src/img/Screenshots/1.png)<br><br>
 
-*SignUp page of KharchaGuru*
-![SignUp Page Of KharchaGuru](https://github.com/Soumya6Tiwari/KharchaGuru/blob/master/Screenshots/Screenshot%20(1489).png)<br><br><br>
-
-*SignUp Validations*
-![SignUp Validations](https://github.com/Soumya6Tiwari/KharchaGuru/blob/master/Screenshots/Screenshot%20(1432).png)<br><br><br>
+*SignUp page of CashCraft*
+![SignUp Page Of CashCraft](./Frontend/frontend/src/img/Screenshots/2.png)<br><br>
 
 *Register New user*
-![Register New User](https://github.com/Soumya6Tiwari/KharchaGuru/blob/master/Screenshots/Screenshot%20(1490).png)<br><br><br>
+![Register New User](./Frontend/frontend/src/img/Screenshots/3.png)<br><br>
 
 *Logging in User*
-![Logging in User](https://github.com/Soumya6Tiwari/KharchaGuru/blob/master/Screenshots/Screenshot%20(1491).png)<br><br><br>
+![Logging in User](./Frontend/frontend/src/img/Screenshots/4.png)<br><br>
 
 *FrontLook of the DashBoard*
-![FrontLook of the Dashboard](https://github.com/Soumya6Tiwari/KharchaGuru/blob/master/Screenshots/Screenshot%20(1437).png)<br><br><br>
+![FrontLook of the Dashboard](./Frontend/frontend/src/img/Screenshots/5.png)<br><br>
 
-*Empty income Page*
-![Empty income Page](https://github.com/Soumya6Tiwari/KharchaGuru/blob/master/Screenshots/Screenshot%20(1438).png)<br><br><br>
+*Savings Page*
+![Empty expense Page](./Frontend/frontend/src/img/Screenshots/6.png)<br><br>
 
-*Empty expense Page*
-![Empty expense Page](https://github.com/Soumya6Tiwari/KharchaGuru/blob/master/Screenshots/Screenshot%20(1444).png)<br><br><br>
+*Adding new savings*
+![Adding incomes](./Frontend/frontend/src/img/Screenshots/7.png)<br><br>
 
-*Adding incomes*
-![Adding incomes](https://github.com/Soumya6Tiwari/KharchaGuru/blob/master/Screenshots/Screenshot%20(1442).png)<br><br><br>
-![Adding incomes](https://github.com/Soumya6Tiwari/KharchaGuru/blob/master/Screenshots/Screenshot%20(1443).png)<br><br><br>
+*Income Page*
+![Empty income Page](./Frontend/frontend/src/img/Screenshots/8.png)<br><br>
 
-*Adding expenses*
-![Adding expenses](https://github.com/Soumya6Tiwari/KharchaGuru/blob/master/Screenshots/Screenshot%20(1465).png)<br><br><br>
-![Adding expenses](https://github.com/Soumya6Tiwari/KharchaGuru/blob/master/Screenshots/Screenshot%20(1466).png)<br><br><br>
+*Adding new incomes*
+![Adding incomes](./Frontend/frontend/src/img/Screenshots/9.png)<br><br>
 
-*Showing all incomes*
-![Showing all incomes](https://github.com/Soumya6Tiwari/KharchaGuru/blob/master/Screenshots/Screenshot%20(1482).png)<br><br><br>
+*Expense Page*
+![Empty expense Page](./Frontend/frontend/src/img/Screenshots/10.png)<br><br>
 
-*Showing all expenses*
-![Showing all expenses](https://github.com/Soumya6Tiwari/KharchaGuru/blob/master/Screenshots/Screenshot%20(1484).png)<br><br><br>
-
-*View Transactions (incomes)*
-![income transactions](https://github.com/Soumya6Tiwari/KharchaGuru/blob/master/Screenshots/Screenshot%202024-08-12%20013300.png)<br><br><br>
-
-*View Transactions (expenses)*
-![expense transactions](https://github.com/Soumya6Tiwari/KharchaGuru/blob/master/Screenshots/Screenshot%202024-08-12%20013242.png)<br><br><br>
+*Adding new expenses*
+![Adding expenses](./Frontend/frontend/src/img/Screenshots/11.png)<br><br>
 
 *Updated DashBoard*
-![Updated dashboard](https://github.com/Soumya6Tiwari/KharchaGuru/blob/master/Screenshots/Screenshot%20(1479).png)<br><br><br>
-![Updated dashboard](https://github.com/Soumya6Tiwari/KharchaGuru/blob/master/Screenshots/Screenshot%20(1481).png)<br><br><br>
+![Updated dashboard](./Frontend/frontend/src/img/Screenshots/12.png)<br><br>
 
 ## Table of Contents
 - [Features](#features)
@@ -67,6 +59,7 @@ KharchaGuru is a cutting-edge MERN stack-powered expense tracker crafted to elev
 
 - **User Authentication**: Secure user signup and login with JWT-based authentication.
 - **Real-Time Expense Tracking**: Keep track of your expenses as you spend, with instant updates and data storage.
+- **Savings Categorization**: Categorizing your savings for better management.
 - **Expense Categorization**: Organize your expenses into categories for better analysis and budgeting.
 - **Income Categorization**: Track and categorize your income sources to maintain a clear financial overview.
 - **History Tracking**: View detailed histories of your expenses and income, allowing for better financial planning and retrospection.
@@ -118,13 +111,13 @@ Here are the installation steps for the KharchaGuru project:
 
 1. **Clone the Repository**:
    Start by cloning the KharchaGuru repository from GitHub to your local machine:
-   git clone https://github.com/Soumya6Tiwari/kharchaguru.git  <br>
-   cd kharchaguru
+   git clone https://github.com/Shruti2026/CashCraft.git  <br>
+   cd CashCraft
 
 2. **Install Frontend Dependencies**:
    Navigate to the frontend directory and install the necessary dependencies using npm:
    <br>
-   cd frontend
+   cd Frontend
    <br>
    cd frontend
    <br>
@@ -133,7 +126,7 @@ Here are the installation steps for the KharchaGuru project:
 3. **Install Backend Dependencies**:
    Next, move to the backend directory and install the backend dependencies:
    <br>
-   cd backend
+   cd Backend
    <br>
    npm install
 
@@ -149,8 +142,8 @@ Here are the installation steps for the KharchaGuru project:
    Now, navigate back to the frontend directory and start the frontend server:<br>
    npm start
    
-7. **Access KharchaGuru**:
-   Open your web browser and go to `http://localhost:3000` to start using KharchaGuru.
+7. **Access CashCraft**:
+   Open your web browser and go to `http://localhost:3000` to start using CashCraft.
 
 ### Additional Notes
 
@@ -159,35 +152,39 @@ Here are the installation steps for the KharchaGuru project:
 - If you encounter any issues, check the console for error messages and ensure that all dependencies are correctly installed.
 
 # Usage
-Here’s the usage section for the KharchaGuru project:
+Here’s the usage section for the CashCarft project:
  ### usage
 1. **Sign Up or Log In**:
    - Visit `http://localhost:3000` in your web browser.
    - If you don't have an account, click on the "Sign Up" button and create an account by providing your email and password.
    - If you already have an account, simply log in using your credentials.
 
-2. **Add an Expense**:
-   - After logging in, navigate to the "Add Expense" section.
+2. **Add Savings**:
+   - After logging in, navigate to the "Saving Goals" section.
+   - Enter the saving goal
+   - Enter the amount and targeted amount.
+   - You can also update the previous saving.
+   - Click "Add/Update" to save it.
+
+3. **Add Expense**:
+   - After logging in, navigate to the "Expense" section.
    - Select a category (e.g., Food, Transport, Entertainment) for your expense.
    - Enter the amount, date, and any additional notes.
    - Click "Add Expense" to save it.
 
-3. **Add Income**:
-   - Go to the "Add Income" section.
+4. **Add Income**:
+   - Go to the "Income" section.
    - Choose the income source category (e.g., Salary, Freelance, Investments).
    - Enter the income amount, date, and any relevant notes.
    - Click "Add Income" to save it.
 
-4. **View Expense and Income History**:
+5. **View Expense and Income History**:
    - Access the "History" section to view a detailed log of all your expenses and income on the dashboard
   
 
-7. **Log Out**:
+6. **Log Out**:
    - When you're done, ensure to log out of your account securely by clicking on the "Log Out" button.
 
-# Contributing
-### contributing
-Contributions are welcome! Please fork the repository and submit a pull request with your changes.
 
 # License
 ### license
@@ -195,7 +192,7 @@ This project is licensed under the MIT License.
 
 # Contact
 ### contact
-For any inquiries or feedback, please reach out to soumyaecc6@example.com
+For any inquiries or feedback, please reach out to gshruti779@gmail.com
 
 
 
