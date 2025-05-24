@@ -1,116 +1,152 @@
 import React, { useContext, useState } from "react";
 import axios from 'axios';
-import { INCOME_API, EXPENSE_API, SAVING_API } from '../api/apiEndpoints'; // Import endpoints
+import { INCOME_API, EXPENSE_API, SAVING_API } from '../api/apiEndpoints';
 
 const GlobalContext = React.createContext();
 
 export const GlobalProvider = ({ children }) => {
-    const [incomes, setIncomes] = useState([]);
-    const [expenses, setExpenses] = useState([]);
-    const [error, setError] = useState(null);
-    const [savings, setSavings] = useState([]);
+  const [incomes, setIncomes] = useState([]);
+  const [expenses, setExpenses] = useState([]);
+  const [savings, setSavings] = useState([]);
+  const [error, setError] = useState(null);
 
+  // Income
+  const addIncome = async (income) => {
+    try {
+      await axios.post(INCOME_API.ADD, income);
+      getIncomes();
+    } catch (err) {
+      setError(err.response?.data?.message || 'Error adding income');
+    }
+  };
 
-    const addIncome = async (income) => {
-        try {
-            await axios.post(INCOME_API.ADD, income);
-            getIncomes();
-        } catch (err) {
-            setError(err.response?.data?.message || 'Error adding income');
-        }
-    };
+  const getIncomes = async () => {
+    try {
+      const response = await axios.get(INCOME_API.GET);
+      setIncomes(response.data);
+    } catch (err) {
+      setError(err.response?.data?.message || 'Error fetching incomes');
+    }
+  };
 
-    const getIncomes = async () => {
-        try {
-            const response = await axios.get(INCOME_API.GET);
-            setIncomes(response.data);
-        } catch (err) {
-            setError(err.response?.data?.message || 'Error fetching incomes');
-        }
-    };
+  const deleteIncome = async (id) => {
+    try {
+      await axios.delete(INCOME_API.DELETE(id));
+      getIncomes();
+    } catch (err) {
+      setError(err.response?.data?.message || 'Error deleting income');
+    }
+  };
 
-    const deleteIncome = async (id) => {
-        try {
-            await axios.delete(INCOME_API.DELETE(id));
-            getIncomes();
-        } catch (err) {
-            setError(err.response?.data?.message || 'Error deleting income');
-        }
-    };
+  const totalIncome = () => incomes.reduce((total, income) => total + income.amount, 0);
 
-    const totalIncome = () => incomes.reduce((total, income) => total + income.amount, 0);
+  // Expense
+  const addExpense = async (expense) => {
+    try {
+      await axios.post(EXPENSE_API.ADD, expense);
+      getExpenses();
+    } catch (err) {
+      setError(err.response?.data?.message || 'Error adding expense');
+    }
+  };
 
-    const totalSavings = () => savings.reduce((acc, curr) => acc + curr.amount, 0);
+  const getExpenses = async () => {
+    try {
+      const response = await axios.get(EXPENSE_API.GET);
+      setExpenses(response.data);
+    } catch (err) {
+      setError(err.response?.data?.message || 'Error fetching expenses');
+    }
+  };
 
-    const addExpense = async (expense) => {
-        try {
-            await axios.post(EXPENSE_API.ADD, expense);
-            getExpenses();
-        } catch (err) {
-            setError(err.response?.data?.message || 'Error adding expense');
-        }
-    };
+  const deleteExpense = async (id) => {
+    try {
+      await axios.delete(EXPENSE_API.DELETE(id));
+      getExpenses();
+    } catch (err) {
+      setError(err.response?.data?.message || 'Error deleting expense');
+    }
+  };
 
-    const getExpenses = async () => {
-        try {
-            const response = await axios.get(EXPENSE_API.GET);
-            setExpenses(response.data);
-        } catch (err) {
-            setError(err.response?.data?.message || 'Error fetching expenses');
-        }
-    };
+  const totalExpenses = () => expenses.reduce((total, expense) => total + expense.amount, 0);
 
-    const deleteExpense = async (id) => {
-        try {
-            await axios.delete(EXPENSE_API.DELETE(id));
-            getExpenses();
-        } catch (err) {
-            setError(err.response?.data?.message || 'Error deleting expense');
-        }
-    };
+  // Savings
+  const getSavings = async () => {
+    try {
+      const res = await axios.get(SAVING_API.GET);
+      setSavings(res.data);
+    } catch (error) {
+      setError(error.response?.data?.message || 'Error fetching savings');
+    }
+  };
 
-    const getSavings = async () => {
-        try {
-            const res = await axios.get(SAVING_API.GET);
-            setSavings(res.data);
-        } catch (error) {
-            console.error('Error fetching savings:', error);
-        }
-    };
+  const addSaving = async (saving) => {
+    try {
+      // Backend returns message only, so after POST call getSavings to update local state
+      await axios.post(SAVING_API.ADD_OR_UPDATE, saving);
+      await getSavings(); // refresh the savings list
+    } catch (err) {
+      setError(err.response?.data?.message || 'Error adding saving');
+    }
+  };
 
-    const totalExpenses = () => expenses.reduce((total, expense) => total + expense.amount, 0);
+  const updateSaving = async (id, saving) => {
+    // Your backend doesn't have a separate update route, so this might be unused.
+    // We can skip or remove this if unused.
+  };
 
-    const totalBalance = () => totalIncome() - totalExpenses() - totalSavings();
+  const deleteSaving = async (id) => {
+    try {
+      await axios.delete(SAVING_API.DELETE(id));
+      getSavings();
+    } catch (err) {
+      setError(err.response?.data?.message || 'Error deleting saving');
+    }
+  };
 
-    const transactionHistory = () => {
-        const history = [...incomes, ...expenses];
-        history.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-        return history.slice(0, 4);
-    };
+  const totalSavings = () => savings.reduce((acc, curr) => acc + curr.amount, 0);
 
-    return (
-        <GlobalContext.Provider value={{
-            addIncome,
-            getIncomes,
-            incomes,
-            savings, 
-            deleteIncome,
-            totalIncome,
-            expenses,
-            addExpense,
-            getExpenses,
-            deleteExpense,
-            totalExpenses,
-            totalBalance,
-            transactionHistory,
-            totalSavings,      
-            getSavings,
-            error,
-            setError
-        }}>
-            {children}
-        </GlobalContext.Provider>
-    );
+  // Balance & History
+  const totalBalance = () => totalIncome() - totalExpenses() - totalSavings();
+
+  const transactionHistory = () => {
+    const history = [...incomes, ...expenses];
+    history.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    return history.slice(0, 4);
+  };
+
+  return (
+    <GlobalContext.Provider value={{
+      // Income
+      addIncome,
+      getIncomes,
+      incomes,
+      deleteIncome,
+      totalIncome,
+
+      // Expense
+      addExpense,
+      getExpenses,
+      expenses,
+      deleteExpense,
+      totalExpenses,
+
+      // Saving
+      savings,
+      getSavings,
+      addSaving,
+      deleteSaving,
+      totalSavings,
+
+      // Others
+      totalBalance,
+      transactionHistory,
+      error,
+      setError
+    }}>
+      {children}
+    </GlobalContext.Provider>
+  );
 };
 
 export const useGlobalContext = () => useContext(GlobalContext);

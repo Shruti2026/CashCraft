@@ -26,4 +26,5 @@ export const EXPENSE_API = {
 export const SAVING_API = {
     ADD_OR_UPDATE: `${BASE_URL}/add-saving`,
     GET: `${BASE_URL}/get-savings`,
+    DELETE: (id) => `${BASE_URL}/delete-saving/${id}`,
 };

@@ -1,34 +1,59 @@
-const Saving = require('../models/SavingModel');
+const Saving = require('../models/savingModel');
 
-exports.addOrUpdateSaving = async (req, res) => {
+// Get all savings
+const getSavings = async (req, res) => {
+  try 
+  {
+    const savings = await Saving.find();
+    res.status(200).json(savings);
+  } 
+  catch (error) 
+  {
+    res.status(500).json({ message: 'Error fetching savings', error });
+  }
+};
+
+// Add or update a saving (by goal name)
+const addOrUpdateSaving = async (req, res) => {
   const { goal, amount, targetAmount } = req.body;
 
-  if (!goal || !amount || !targetAmount) {
+  if (!goal || amount == null || targetAmount == null) {
     return res.status(400).json({ message: 'All fields are required' });
   }
 
   try {
-    const existing = await Saving.findOne({ goal });
+    let existing = await Saving.findOne({ goal });
 
     if (existing) {
       existing.amount += amount;
+      existing.targetAmount = targetAmount; // Optional: update target if needed
       await existing.save();
-      return res.status(200).json({ message: 'Saving goal updated' });
+      return res.status(200).json({ message: 'Saving updated' });
     }
 
     const newSaving = new Saving({ goal, amount, targetAmount });
     await newSaving.save();
-    res.status(201).json({ message: 'Saving goal added' });
+    res.status(201).json({ message: 'Saving added' });
+
   } catch (error) {
-    res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ message: 'Error saving data', error });
   }
 };
 
-exports.getSavings = async (req, res) => {
+// Delete saving by ID
+const deleteSaving = async (req, res) => {
+  const { id } = req.params;
+
   try {
-    const savings = await Saving.find().sort({ createdAt: -1 });
-    res.status(200).json(savings);
+    await Saving.findByIdAndDelete(id);
+    res.status(200).json({ message: 'Saving deleted' });
   } catch (error) {
-    res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ message: 'Error deleting saving', error });
   }
+};
+
+module.exports = {
+  getSavings,
+  addOrUpdateSaving,
+  deleteSaving
 };

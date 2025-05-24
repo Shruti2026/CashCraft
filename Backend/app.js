@@ -1,20 +1,25 @@
-const router = require('express').Router();
-const { addExpense, getExpenses, deleteExpense } = require('../controllers/expense');
-const { addIncome, getIncomes, deleteIncome } = require('../controllers/income');
-const { addOrUpdateSaving, getSavings } = require('../controllers/saving');
+const express = require('express');
+const cors = require('cors');
+const mongoose = require('mongoose');
+require('dotenv').config();
 
-// Income routes
-router.post('/add-income', addIncome);
-router.get('/get-incomes', getIncomes);
-router.delete('/delete-income/:id', deleteIncome);
+const authRoutes = require('./routes/auth');
+const transactionsRoutes = require('./routes/transactions');
 
-// Expense routes
-router.post('/add-expense', addExpense);
-router.get('/get-expenses', getExpenses);
-router.delete('/delete-expense/:id', deleteExpense);
+const app = express();
 
-// Savings routes
-router.post('/add-saving', addOrUpdateSaving);
-router.get('/get-savings', getSavings);
+app.use(express.json());
+app.use(cors());
 
-module.exports = router;
+app.use('/api/v1/auth', authRoutes);
+app.use('/api/v1', transactionsRoutes);
+
+mongoose.connect(process.env.MONGO_URL)
+.then(() => console.log('MongoDB connected successfully'))
+.catch(err => console.error('MongoDB connection error:', err));
+
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
