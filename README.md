@@ -132,7 +132,7 @@ Here are the installation steps for the KharchaGuru project:
 
 4. **Setup Environment Variables**:
    Create a `.env` file in the `backend` directory and add the following environment variables:<br>
-   MONGODB_URI=   mongodb+srv://soumyaecc6:bachat123@expense.cgzpsya.mongodb.net/?retryWrites=true&w=majority&appName=Expense <br>
+   MONGODB_URI= mongodb+srv://cashcraft_user:cashcraft_user123@cashcraft.nvrea7g.mongodb.net/?retryWrites=true&w=majority&appName=CashCraft<br>
    JWT_SECRET=MCA2025
    
 5. **Start the Backend Server**:
